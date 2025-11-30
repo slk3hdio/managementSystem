@@ -4,7 +4,7 @@
     <el-header class="header">
       <div class="header-content">
         <div class="logo">
-          <h2>牙科医院管理系统</h2>
+          <h2>亿大口腔医院管理系统</h2>
         </div>
         <div class="user-info">
           <el-dropdown>
