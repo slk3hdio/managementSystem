@@ -1,7 +1,7 @@
 import { ref, reactive, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-export function useAppointment() {
+export function useChairSchedule() {
   // 响应式数据
   const loading = ref(false)
   const appointmentDialogVisible = ref(false)
@@ -79,7 +79,7 @@ export function useAppointment() {
       content: '常规洁牙',
       booker: '咨询',
       bookChannel: '咨询',
-      isVisited: false,
+      isVisited: true,
       needFollow: false
     }
   ])
@@ -99,22 +99,22 @@ export function useAppointment() {
     needFollow: false
   })
 
-  // 获取指定医生和时间段的预约
-  const getAppointment = (staffId, timeSlot) => {
+  // 获取指定牙椅和时间段的预约
+  const getAppointment = (chairId, timeSlot) => {
     return appointments.value.find(
-      apt => apt.staffId === staffId &&
+      apt => apt.chairId === chairId &&
       apt.timeSlot === timeSlot &&
       apt.appointDate === selectedDate.value
     )
   }
 
-  // 按医生分组的预约数据
-  const appointmentTableData = computed(() => {
+  // 按牙椅分组的预约数据
+  const chairScheduleData = computed(() => {
     return timeSlots.value.map(timeSlot => {
       const rowData = { time: timeSlot.time }
-      staff.value.forEach(doctor => {
-        const appointment = getAppointment(doctor.staffId, timeSlot.time)
-        rowData[doctor.staffId] = appointment
+      chairs.value.forEach(chair => {
+        const appointment = getAppointment(chair.chairId, timeSlot.time)
+        rowData[chair.chairId] = appointment
       })
       return rowData
     })
@@ -214,11 +214,11 @@ export function useAppointment() {
   }
 
   // 显示新建预约对话框
-  const showNewAppointmentDialog = (staffId = null, time = null) => {
+  const showNewAppointmentDialog = (chairId = null, time = null) => {
     isEditing.value = false
     resetForm()
-    if (staffId) {
-      appointmentForm.staffId = staffId
+    if (chairId) {
+      appointmentForm.chairId = chairId
     }
     if (time) {
       appointmentForm.timeSlot = time
@@ -239,7 +239,6 @@ export function useAppointment() {
     loading,
     appointmentDialogVisible,
     isEditing,
-    appointmentFormRef,
     selectedDate,
     chairs,
     staff,
@@ -247,7 +246,7 @@ export function useAppointment() {
     timeSlots,
     appointments,
     appointmentForm,
-    appointmentTableData,
+    chairScheduleData,
 
     // 方法
     getAppointment,

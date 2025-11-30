@@ -8,17 +8,24 @@
       class="appointment-content"
       :class="{ 'visited': appointment.isVisited }"
     >
-    <div class="appointment-info">
-      <span class="patient-name">
+      
+      <div class="treatment-info">
+        
+        <span class="patient-name">
         {{ appointment.patientName }}
-      </span>
-      <span class="treatment-info">
+        </span>
+        <span class="treatment-content">
         <el-tag size="small" :type="getVisitTypeTagType(appointment.visitType) || 'info'">
           {{ appointment.visitType }}
         </el-tag>
-        <span class="treatment-content">{{ appointment.content }}</span>
+        {{ appointment.content }}
       </span>
+        
       </div>
+      <div class="staff-name">{{ appointment.staffName }}</div>
+
+      
+      
       <div class="appointment-actions">
         <el-button
           v-if="!appointment.isVisited"
@@ -95,7 +102,7 @@ const deleteAppointment = () => {
 
 <style scoped>
 .appointment-cell {
-  height: 80px;
+  height: 100px;
   padding: 4px;
   cursor: pointer;
   border-radius: 4px;
