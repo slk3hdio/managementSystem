@@ -23,10 +23,11 @@
         <template #default="scope">
           <AppointmentCard
             :appointment="scope.row[doctor.staffId]"
+            :chairs="chairs"
             @cell-click="handleCellClick(doctor, scope.row.time)"
             @create-appointment="createAppointment(doctor, scope.row.time)"
-            @edit-appointment="editAppointment(scope.row[doctor.staffId])"
             @mark-visited="markAsVisited(scope.row[doctor.staffId])"
+            @edit-appointment="editAppointment(scope.row[doctor.staffId])"
             @delete-appointment="deleteAppointment(scope.row[doctor.staffId])"
           />
         </template>
@@ -47,13 +48,17 @@ defineProps({
     type: Array,
     required: true
   },
+  chairs: {
+    type: Array,
+    default: () => []
+  },
   loading: {
     type: Boolean,
     default: false
   }
 })
 
-const emit = defineEmits(['cell-click', 'create-appointment', 'edit-appointment', 'mark-visited', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'create-appointment', 'mark-visited', 'edit-appointment', 'delete-appointment'])
 
 const handleCellClick = (doctor, time) => {
   emit('cell-click', doctor, time)

@@ -1,76 +1,64 @@
 <template>
-  <div
-    class="appointment-cell"
-    @click="handleCellClick"
-  >
-    <div
-      v-if="appointment"
-      class="appointment-content"
-      :class="{ 'visited': appointment.isVisited }"
-    >
-    <div class="appointment-info">
-      <span class="patient-name">
-        {{ appointment.patientName }}
-      </span>
-      <span class="treatment-info">
-        <el-tag size="small" :type="getVisitTypeTagType(appointment.visitType) || 'info'">
-          {{ appointment.visitType }}
-        </el-tag>
-        <span class="treatment-content">{{ appointment.content }}</span>
-      </span>
-      </div>
-      <div class="appointment-actions">
-        <el-button
-          v-if="!appointment.isVisited"
-          size="small"
-          type="success"
-          @click.stop="markAsVisited"
-        >
-          标记就诊
-        </el-button>
-        <el-button
-          size="small"
-          @click.stop="editAppointment"
-        >
-          编辑
-        </el-button>
-        <el-button
-          size="small"
-          type="danger"
-          @click.stop="deleteAppointment"
-        >
-          删除
-        </el-button>
-      </div>
-    </div>
-    <div v-else class="empty-cell" @click.stop="createNewAppointment">
-      <el-icon><Plus /></el-icon>
-      <span>新建预约</span>
-    </div>
-  </div>
+  <UniversalAppointmentCard
+    :appointment="appointment"
+    :chairs="chairs"
+    :show-elements="showElements"
+    :show-actions="showActions"
+    :action-labels="actionLabels"
+    :custom-height="customHeight"
+    :tag-effect="tagEffect"
+    @cell-click="handleCellClick"
+    @create-appointment="createNewAppointment"
+    @mark-visited="markAsVisited"
+    @edit-appointment="editAppointment"
+    @delete-appointment="deleteAppointment"
+  />
 </template>
 
 <script setup>
-import { Plus } from '@element-plus/icons-vue'
+import UniversalAppointmentCard from '../../../components/UniversalAppointmentCard.vue'
 
-defineProps({
+const props = defineProps({
   appointment: {
     type: Object,
     default: null
+  },
+  chairs: {
+    type: Array,
+    default: () => []
   }
 })
 
-const emit = defineEmits(['cell-click', 'create-appointment', 'edit-appointment', 'mark-visited', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'create-appointment', 'edit-appointment','mark-visited', 'delete-appointment'])
 
-const getVisitTypeTagType = (visitType) => {
-  const typeMap = {
-    '初诊': 'primary',
-    '复查': 'warning',
-    '洁牙': 'success',
-    '维保': 'info'
-  }
-  return typeMap[visitType] || 'info'
+// Appointment 界面的配置 - 显示医生视角的信息
+const showElements = {
+  patientName: true,
+  staffName: false,  // 在医生视图中不显示医生姓名（因为是按医生分列）
+  staffIcon: false,
+  visitType: true,
+  chairInfo: false,  
+  chairIcon: true,
+  content: true,
+  bookingInfo: false,
+  timeInfo: false,
+  actions: true
 }
+
+const showActions = {
+  markVisited: true,
+  edit: false,
+  delete: true
+}
+
+const actionLabels = {
+  markVisited: '标记就诊',
+  edit: '编辑',
+  delete: '删除'
+}
+
+const customHeight = '100px'
+const tagEffect = 'light'
 
 const handleCellClick = () => {
   emit('cell-click')

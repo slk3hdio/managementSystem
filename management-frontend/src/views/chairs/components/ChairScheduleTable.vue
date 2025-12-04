@@ -23,6 +23,7 @@
         <template #default="scope">
           <ChairScheduleCard
             :appointment="scope.row[chair.chairId]"
+            :chairs="chairs"
             @cell-click="handleCellClick(chair, scope.row.time)"
             @create-appointment="createAppointment(chair, scope.row.time)"
             @edit-appointment="editAppointment(scope.row[chair.chairId])"

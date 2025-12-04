@@ -12,6 +12,7 @@
     <AppointmentTable
       :table-data="appointmentTableData"
       :doctors="doctors"
+      :chairs="chairs"
       :loading="loading"
       @cell-click="handleCellClick"
       @create-appointment="createAppointment"
