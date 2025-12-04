@@ -4,7 +4,6 @@
     <ChairScheduleHeader
       v-model:selectedDate="selectedDate"
       @date-change="handleDateChange"
-      @new-appointment="handleNewAppointment"
       @refresh="refreshData"
     />
 
@@ -14,56 +13,60 @@
       :chairs="chairs"
       :loading="loading"
       @cell-click="handleCellClick"
-      @create-appointment="createAppointment"
       @edit-appointment="editAppointment"
       @mark-visited="markAsVisited"
       @delete-appointment="deleteAppointment"
+      @cancel-chair-assignment="cancelChairAssignment"
     />
 
-    <!-- 新建/编辑预约对话框 -->
-    <ChairScheduleDialog
-      v-model:visible="appointmentDialogVisible"
-      :is-editing="isEditing"
-      :form-data="appointmentForm"
-      :patients="patients"
-      :chairs="chairs"
-      :staff="staff"
-      :time-slots="timeSlots"
-      @save="saveAppointment"
-      @cancel="handleDialogCancel"
+    <!-- 牙椅分配对话框 -->
+    <ChairAssignmentDialog
+      v-model:visible="assignmentDialogVisible"
+      :selected-chair="selectedChair"
+      :selected-time="selectedTime"
+      :selected-date="selectedDate"
+      :unassigned-appointments="unassignedAppointments"
+      @assign-chair="handleAssignChair"
     />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import ChairScheduleHeader from './components/ChairScheduleHeader.vue'
 import ChairScheduleTable from './components/ChairScheduleTable.vue'
-import ChairScheduleDialog from './components/ChairScheduleDialog.vue'
 import { useChairSchedule } from './composables/useChairSchedule'
+import ChairAssignmentDialog from './components/ChairAssignmentDialog.vue'
+
+// 牙椅分配对话框状态
+const assignmentDialogVisible = ref(false)
+const selectedChair = ref(null)
+const selectedTime = ref(null)
 
 // 使用组合式函数
 const {
   loading,
-  appointmentDialogVisible,
-  isEditing,
   selectedDate,
   chairs,
   staff,
   patients,
   timeSlots,
   appointments,
-  appointmentForm,
   chairScheduleData,
-  saveAppointment: saveAppointmentData,
   markAsVisited,
   deleteAppointment,
   loadAppointments,
-  refreshData,
-  showNewAppointmentDialog: showNewAppointmentDialogData,
-  showEditAppointmentDialog,
-  resetForm
+  refreshData
 } = useChairSchedule()
+
+// 获取未分配牙椅的预约（在当前日期和时间段）
+const unassignedAppointments = computed(() => {
+  return appointments.value.filter(apt =>
+    !apt.chairId &&
+    apt.appointDate === selectedDate.value &&
+    apt.timeSlot === selectedTime.value
+  )
+})
 
 // 事件处理方法
 const handleDateChange = (date) => {
@@ -79,28 +82,37 @@ const handleCellClick = (chair, time) => {
   if (appointment) {
     editAppointment(appointment)
   } else {
-    createAppointment(chair.chairId, time)
+    // 点击空闲位置，显示分配预约对话框
+    selectedChair.value = chair
+    selectedTime.value = time
+    assignmentDialogVisible.value = true
   }
 }
 
-const handleNewAppointment = () => {
-  showNewAppointmentDialogData()
-}
-
-const createAppointment = (chairId, time) => {
-  showNewAppointmentDialogData(chairId, time)
-}
-
 const editAppointment = (appointment) => {
-  showEditAppointmentDialog(appointment)
+  // 这里可以添加编辑逻辑，暂时只处理取消分配
+  console.log('编辑预约:', appointment)
 }
 
-const saveAppointment = (formData) => {
-  saveAppointmentData(formData)
+const handleAssignChair = (appointmentId) => {
+  // 分配牙椅的逻辑
+  console.log('分配牙椅:', {
+    chairId: selectedChair.value.chairId,
+    appointmentId,
+    timeSlot: selectedTime.value,
+    date: selectedDate.value
+  })
+
+  // 这里需要调用更新预约的API
+  // 暂时只是关闭对话框
+  assignmentDialogVisible.value = false
 }
 
-const handleDialogCancel = () => {
-  resetForm()
+const cancelChairAssignment = (appointment) => {
+  // 取消分配的逻辑
+  console.log('取消分配牙椅:', appointment.appointId)
+  // 这里需要调用更新预约的API，将chairId设为null
+  // 暂时只打印日志
 }
 
 onMounted(() => {

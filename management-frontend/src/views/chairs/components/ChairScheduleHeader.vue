@@ -10,10 +10,6 @@
         value-format="YYYY-MM-DD"
         @change="handleDateChange"
       />
-      <el-button type="primary" @click="showNewAppointmentDialog">
-        <el-icon><Plus /></el-icon>
-        新建预约
-      </el-button>
     </div>
     <div class="right-actions">
       <el-button @click="refreshData">
@@ -25,7 +21,7 @@
 </template>
 
 <script setup>
-import { Plus, Refresh } from '@element-plus/icons-vue'
+import { Refresh } from '@element-plus/icons-vue'
 
 defineProps({
   selectedDate: {
@@ -34,7 +30,7 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['update:selectedDate', 'date-change', 'new-appointment', 'refresh'])
+const emit = defineEmits(['update:selectedDate', 'date-change', 'refresh'])
 
 const handleDateUpdate = (date) => {
   emit('update:selectedDate', date)
@@ -44,9 +40,6 @@ const handleDateChange = (date) => {
   emit('date-change', date)
 }
 
-const showNewAppointmentDialog = () => {
-  emit('new-appointment')
-}
 
 const refreshData = () => {
   emit('refresh')

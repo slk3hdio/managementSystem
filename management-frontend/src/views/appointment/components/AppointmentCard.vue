@@ -7,8 +7,8 @@
     :action-labels="actionLabels"
     :custom-height="customHeight"
     :tag-effect="tagEffect"
+    empty-text="新建预约"
     @cell-click="handleCellClick"
-    @create-appointment="createNewAppointment"
     @mark-visited="markAsVisited"
     @edit-appointment="editAppointment"
     @delete-appointment="deleteAppointment"
@@ -29,7 +29,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['cell-click', 'create-appointment', 'edit-appointment','mark-visited', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'edit-appointment','mark-visited', 'delete-appointment'])
 
 // Appointment 界面的配置 - 显示医生视角的信息
 const showElements = {
@@ -62,10 +62,6 @@ const tagEffect = 'light'
 
 const handleCellClick = () => {
   emit('cell-click')
-}
-
-const createNewAppointment = () => {
-  emit('create-appointment')
 }
 
 const editAppointment = () => {

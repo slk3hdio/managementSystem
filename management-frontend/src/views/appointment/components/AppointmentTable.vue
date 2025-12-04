@@ -4,7 +4,7 @@
       :data="tableData"
       border
       style="width: 100%"
-      height="600"
+      height="500"
       v-loading="loading"
     >
       <el-table-column
@@ -25,7 +25,6 @@
             :appointment="scope.row[doctor.staffId]"
             :chairs="chairs"
             @cell-click="handleCellClick(doctor, scope.row.time)"
-            @create-appointment="createAppointment(doctor, scope.row.time)"
             @mark-visited="markAsVisited(scope.row[doctor.staffId])"
             @edit-appointment="editAppointment(scope.row[doctor.staffId])"
             @delete-appointment="deleteAppointment(scope.row[doctor.staffId])"
@@ -58,14 +57,10 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['cell-click', 'create-appointment', 'mark-visited', 'edit-appointment', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'mark-visited', 'edit-appointment', 'delete-appointment'])
 
 const handleCellClick = (doctor, time) => {
   emit('cell-click', doctor, time)
-}
-
-const createAppointment = (doctor, time) => {
-  emit('create-appointment', doctor.staffId, time)
 }
 
 const editAppointment = (appointment) => {

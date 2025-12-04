@@ -27,7 +27,7 @@
       </el-form-item>
 
       <el-form-item label="牙椅" prop="chairId">
-        <el-select v-model="form.chairId" placeholder="选择牙椅" style="width: 100%">
+        <el-select v-model="form.chairId" placeholder="可选择牙椅，也可稍后分配" style="width: 100%" clearable>
           <el-option
             v-for="chair in chairs"
             :key="chair.chairId"
@@ -174,7 +174,6 @@ const form = reactive({
 
 const rules = reactive({
   patientId: [{ required: true, message: '请选择患者', trigger: 'change' }],
-  chairId: [{ required: true, message: '请选择牙椅', trigger: 'change' }],
   staffId: [{ required: true, message: '请选择接诊人员', trigger: 'change' }],
   appointDate: [{ required: true, message: '请选择预约日期', trigger: 'change' }],
   timeSlot: [{ required: true, message: '请选择时间', trigger: 'change' }],

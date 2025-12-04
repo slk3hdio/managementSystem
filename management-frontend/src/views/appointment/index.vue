@@ -15,7 +15,6 @@
       :chairs="chairs"
       :loading="loading"
       @cell-click="handleCellClick"
-      @create-appointment="createAppointment"
       @edit-appointment="editAppointment"
       @mark-visited="markAsVisited"
       @delete-appointment="deleteAppointment"

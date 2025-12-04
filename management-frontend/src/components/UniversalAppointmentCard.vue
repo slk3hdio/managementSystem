@@ -61,6 +61,9 @@
           @click.stop="markAsVisited">
           {{ actionLabels.markVisited }}
         </el-button>
+        <el-button v-if="showActions.cancelChairAssignment && appointment.chairId" size="small" type="warning" @click.stop="cancelChairAssignment">
+          {{ actionLabels.cancelChairAssignment || '取消分配' }}
+        </el-button>
         <el-button v-if="showActions.edit" size="small" @click.stop="editAppointment">
           {{ actionLabels.edit }}
         </el-button>
@@ -71,7 +74,7 @@
     </div>
 
     <!-- 空白状态 -->
-    <div v-else class="empty-cell" @click.stop="createNewAppointment">
+    <div v-else class="empty-cell">
       <el-icon>
         <Plus />
       </el-icon>
@@ -114,7 +117,8 @@ const props = defineProps({
     default: () => ({
       markVisited: true,
       edit: true,
-      delete: true
+      delete: true,
+      cancelChairAssignment: false
     })
   },
 
@@ -124,7 +128,8 @@ const props = defineProps({
     default: () => ({
       markVisited: '标记就诊',
       edit: '编辑',
-      delete: '删除'
+      delete: '删除',
+      cancelChairAssignment: '取消分配'
     })
   },
 
@@ -156,7 +161,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['cell-click', 'create-appointment', 'edit-appointment', 'mark-visited', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'edit-appointment', 'mark-visited', 'delete-appointment', 'cancel-chair-assignment'])
 
 const getVisitTypeTagType = (visitType) => {
   const typeMap = {
@@ -179,10 +184,6 @@ const handleCellClick = () => {
   emit('cell-click')
 }
 
-const createNewAppointment = () => {
-  emit('create-appointment')
-}
-
 const editAppointment = () => {
   emit('edit-appointment')
 }
@@ -193,6 +194,10 @@ const markAsVisited = () => {
 
 const deleteAppointment = () => {
   emit('delete-appointment')
+}
+
+const cancelChairAssignment = () => {
+  emit('cancel-chair-assignment')
 }
 </script>
 

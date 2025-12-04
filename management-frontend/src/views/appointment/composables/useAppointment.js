@@ -57,6 +57,7 @@ export function useAppointment() {
       chairId: 1,
       staffId: 1,
       staffName: '张医生',
+      staffRole: '医生',
       appointDate: selectedDate.value,
       timeSlot: '09:00',
       visitType: '复查',
@@ -73,6 +74,7 @@ export function useAppointment() {
       chairId: 2,
       staffId: 2,
       staffName: '李医生',
+      staffRole: '医生',
       appointDate: selectedDate.value,
       timeSlot: '10:00',
       visitType: '初诊',
@@ -81,6 +83,74 @@ export function useAppointment() {
       bookChannel: '咨询',
       isVisited: false,
       needFollow: false
+    },
+    {
+      appointId: 3,
+      patientId: 3,
+      patientName: '王五',
+      chairId: null, // 未分配牙椅
+      staffId: 1,
+      staffName: '张医生',
+      staffRole: '医生',
+      appointDate: selectedDate.value,
+      timeSlot: '09:30',
+      visitType: '初诊',
+      content: '牙齿检查',
+      booker: '渠道',
+      bookChannel: '渠道',
+      isVisited: false,
+      needFollow: false
+    },
+    {
+      appointId: 4,
+      patientId: 4,
+      patientName: '赵六',
+      chairId: null, // 未分配牙椅
+      staffId: 2,
+      staffName: '李医生',
+      staffRole: '医生',
+      appointDate: selectedDate.value,
+      timeSlot: '10:30',
+      visitType: '洁牙',
+      content: '深度洁牙',
+      booker: '客服',
+      bookChannel: '客服',
+      isVisited: false,
+      needFollow: true
+    },
+    {
+      appointId: 5,
+      patientId: 1,
+      patientName: '张三',
+      chairId: 3,
+      staffId: 4,
+      staffName: '刘洁牙师',
+      staffRole: '洁牙师',
+      appointDate: selectedDate.value,
+      timeSlot: '14:00',
+      visitType: '洁牙',
+      content: '定期洁牙',
+      booker: '前台',
+      bookChannel: '前台',
+      isVisited: false,
+      needFollow: false
+    },
+    {
+      appointId: 6,
+      patientId: 2,
+      patientName: '李四',
+      chairId: null, // 未分配牙椅
+      staffId: 3,
+      staffName: '王助理',
+      staffRole: '助理',
+      appointDate: selectedDate.value,
+      timeSlot: '15:00',
+      visitType: '维保',
+      content: '设备维护',
+      booker: '咨询',
+      bookChannel: '咨询',
+      isVisited: false,
+      needFollow: true
     }
   ])
 

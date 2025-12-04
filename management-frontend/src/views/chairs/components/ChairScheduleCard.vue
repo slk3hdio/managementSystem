@@ -7,11 +7,12 @@
     :action-labels="actionLabels"
     :custom-height="customHeight"
     :tag-effect="tagEffect"
+    :empty-text="emptyText"
     @cell-click="handleCellClick"
-    @create-appointment="createNewAppointment"
     @edit-appointment="editAppointment"
     @mark-visited="markAsVisited"
     @delete-appointment="deleteAppointment"
+    @cancel-chair-assignment="cancelChairAssignment"
   />
 </template>
 
@@ -29,7 +30,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['cell-click', 'create-appointment', 'edit-appointment', 'mark-visited', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'edit-appointment', 'mark-visited', 'delete-appointment', 'cancel-chair-assignment'])
 
 // Chairs 界面的配置 - 显示牙椅视角的信息
 const showElements = {
@@ -48,25 +49,25 @@ const showElements = {
 const showActions = {
   markVisited: true,
   edit: false,
-  delete: true
+  delete: true,
+  cancelChairAssignment: true
 }
 
 const actionLabels = {
   markVisited: '标记就诊',
   edit: '编辑',
-  delete: '删除'
+  delete: '删除',
+  cancelChairAssignment: '取消分配'
 }
 
 const customHeight = '130px'
 const tagEffect = 'light'
+const emptyText = '分配预约'
 
 const handleCellClick = () => {
   emit('cell-click')
 }
 
-const createNewAppointment = () => {
-  emit('create-appointment')
-}
 
 const editAppointment = () => {
   emit('edit-appointment')
@@ -78,5 +79,9 @@ const markAsVisited = () => {
 
 const deleteAppointment = () => {
   emit('delete-appointment')
+}
+
+const cancelChairAssignment = () => {
+  emit('cancel-chair-assignment')
 }
 </script>
