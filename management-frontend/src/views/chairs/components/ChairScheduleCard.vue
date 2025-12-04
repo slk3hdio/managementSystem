@@ -11,6 +11,7 @@
     @cell-click="handleCellClick"
     @edit-appointment="editAppointment"
     @mark-visited="markAsVisited"
+    @unmark-visited="unmarkVisited"
     @delete-appointment="deleteAppointment"
     @cancel-chair-assignment="cancelChairAssignment"
   />
@@ -30,7 +31,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['cell-click', 'edit-appointment', 'mark-visited', 'delete-appointment', 'cancel-chair-assignment'])
+const emit = defineEmits(['cell-click', 'edit-appointment', 'mark-visited', 'unmark-visited', 'delete-appointment', 'cancel-chair-assignment'])
 
 // Chairs 界面的配置 - 显示牙椅视角的信息
 const showElements = {
@@ -75,6 +76,10 @@ const editAppointment = () => {
 
 const markAsVisited = () => {
   emit('mark-visited')
+}
+
+const unmarkVisited = () => {
+  emit('unmark-visited')
 }
 
 const deleteAppointment = () => {

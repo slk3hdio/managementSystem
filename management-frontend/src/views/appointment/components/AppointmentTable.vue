@@ -25,7 +25,9 @@
             :appointment="scope.row[doctor.staffId]"
             :chairs="chairs"
             @cell-click="handleCellClick(doctor, scope.row.time)"
+            @create-appointment="createAppointment(doctor, scope.row.time)"
             @mark-visited="markAsVisited(scope.row[doctor.staffId])"
+            @unmark-visited="unmarkVisited(scope.row[doctor.staffId])"
             @edit-appointment="editAppointment(scope.row[doctor.staffId])"
             @delete-appointment="deleteAppointment(scope.row[doctor.staffId])"
           />
@@ -57,7 +59,7 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['cell-click', 'mark-visited', 'edit-appointment', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'create-appointment', 'mark-visited', 'unmark-visited', 'edit-appointment', 'delete-appointment'])
 
 const handleCellClick = (doctor, time) => {
   emit('cell-click', doctor, time)
@@ -67,8 +69,16 @@ const editAppointment = (appointment) => {
   emit('edit-appointment', appointment)
 }
 
+const createAppointment = (doctor, time) => {
+  emit('create-appointment', doctor.staffId, time)
+}
+
 const markAsVisited = (appointment) => {
   emit('mark-visited', appointment)
+}
+
+const unmarkVisited = (appointment) => {
+  emit('unmark-visited', appointment)
 }
 
 const deleteAppointment = (appointment) => {

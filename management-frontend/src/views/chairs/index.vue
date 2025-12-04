@@ -15,6 +15,7 @@
       @cell-click="handleCellClick"
       @edit-appointment="editAppointment"
       @mark-visited="markAsVisited"
+      @unmark-visited="unmarkVisitedHandler"
       @delete-appointment="deleteAppointment"
       @cancel-chair-assignment="cancelChairAssignment"
     />
@@ -54,6 +55,7 @@ const {
   appointments,
   chairScheduleData,
   markAsVisited,
+  unmarkVisited,
   deleteAppointment,
   loadAppointments,
   refreshData
@@ -113,6 +115,10 @@ const cancelChairAssignment = (appointment) => {
   console.log('取消分配牙椅:', appointment.appointId)
   // 这里需要调用更新预约的API，将chairId设为null
   // 暂时只打印日志
+}
+
+const unmarkVisitedHandler = (appointment) => {
+  unmarkVisited(appointment)
 }
 
 onMounted(() => {

@@ -17,6 +17,7 @@
       @cell-click="handleCellClick"
       @edit-appointment="editAppointment"
       @mark-visited="markAsVisited"
+      @unmark-visited="unmarkVisitedHandler"
       @delete-appointment="deleteAppointment"
     />
 
@@ -57,6 +58,7 @@ const {
   appointmentTableData,
   saveAppointment: saveAppointmentData,
   markAsVisited,
+  unmarkVisited,
   deleteAppointment,
   loadAppointments,
   refreshData,
@@ -67,7 +69,7 @@ const {
 
 // 过滤出医生（只有role为'医生'的员工）
 const doctors = computed(() => {
-  return staff.value.filter(employee => employee.role === '医生')
+  return staff.value.filter(employee => true)
 })
 
 // 事件处理方法
@@ -102,6 +104,10 @@ const editAppointment = (appointment) => {
 
 const saveAppointment = (formData) => {
   saveAppointmentData(formData)
+}
+
+const unmarkVisitedHandler = (appointment) => {
+  unmarkVisited(appointment)
 }
 
 const handleDialogCancel = () => {

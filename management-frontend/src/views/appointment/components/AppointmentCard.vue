@@ -10,6 +10,7 @@
     empty-text="新建预约"
     @cell-click="handleCellClick"
     @mark-visited="markAsVisited"
+    @unmark-visited="unmarkVisited"
     @edit-appointment="editAppointment"
     @delete-appointment="deleteAppointment"
   />
@@ -29,7 +30,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['cell-click', 'edit-appointment','mark-visited', 'delete-appointment'])
+const emit = defineEmits(['cell-click', 'edit-appointment','mark-visited', 'unmark-visited', 'delete-appointment'])
 
 // Appointment 界面的配置 - 显示医生视角的信息
 const showElements = {
@@ -70,6 +71,10 @@ const editAppointment = () => {
 
 const markAsVisited = () => {
   emit('mark-visited')
+}
+
+const unmarkVisited = () => {
+  emit('unmark-visited')
 }
 
 const deleteAppointment = () => {

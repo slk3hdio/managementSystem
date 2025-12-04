@@ -250,6 +250,19 @@ export function useAppointment() {
     }
   }
 
+  // 取消标记就诊
+  const unmarkVisited = async (appointment) => {
+    try {
+      const index = appointments.value.findIndex(apt => apt.appointId === appointment.appointId)
+      if (index !== -1) {
+        appointments.value[index].isVisited = false
+      }
+      ElMessage.success('已取消标记就诊')
+    } catch (error) {
+      ElMessage.error('操作失败')
+    }
+  }
+
   // 删除预约
   const deleteAppointment = async (appointment) => {
     try {
@@ -324,6 +337,7 @@ export function useAppointment() {
     resetForm,
     saveAppointment,
     markAsVisited,
+    unmarkVisited,
     deleteAppointment,
     loadAppointments,
     refreshData,
